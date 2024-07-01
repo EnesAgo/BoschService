@@ -1,10 +1,18 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Link from "next/link";
 import {useRouter} from "next/router";
 
 export default function Sidebar({ tab }: any) {
 
     const router = useRouter()
+    const [userData, setUserData] = useState<any>(false)
+
+    useEffect(() => {
+        if(localStorage.jwt){
+            setUserData(JSON.parse(localStorage.jwt))
+        }
+    }, [])
+
     function logOut() {
         localStorage.setItem('jwt', '');
         return router.replace('/login')
@@ -26,28 +34,12 @@ export default function Sidebar({ tab }: any) {
                             >Home</p>
                         </Link>
                     </li>
-                    <li className={"w-[70%]"}>
-                        <Link href={"/discuss"} className={`flex gap-4 items-center ${tab=="discuss" ? "opacity-100 underline underline-offset-[5px]" : "opacity-50"} hover:opacity-100`}>
-                            {/*<img src="/assets/images/chat.png" alt="settings icon" className="w-6 h-6" />*/}
-                            <p
-                                // className={"text-[rgba(0,0,0,.35)] hover:text-gray-800"}
-                            >Discuss</p>
-                        </Link>
-                    </li>
-                    <li className={"w-[70%]"}>
-                        <Link href={"/tech-news"} className={`flex gap-4 items-center ${tab=="techNews" ? "opacity-100 underline underline-offset-[5px]" : "opacity-50"} hover:opacity-100`}>
-                            {/*<img src="/assets/images/news.png" alt="settings icon" className="w-6 h-6" />*/}
-                            <p
-                                // className={"text-[rgba(0,0,0,.35)] hover:text-gray-800"}
-                            >Tech News</p>
-                        </Link>
-                    </li>
-                    <li className={"w-[70%]"}>
-                        <Link href={"/books"} className={`flex gap-4 items-center ${tab=="books" ? "opacity-100 underline underline-offset-[5px]" : "opacity-50"} hover:opacity-100`}>
+                    <li className={`w-[70%] ${!userData?.isAdmin && "hidden"}`}>
+                        <Link href={"/admin"} className={`flex gap-4 items-center ${tab=="books" ? "opacity-100 underline underline-offset-[5px]" : "opacity-50"} hover:opacity-100`}>
                             {/*<img src="/assets/images/book.png" alt="settings icon" className="w-6 h-6" />*/}
                             <p
                                 // className={"text-[rgba(0,0,0,.35)] hover:text-gray-800"}
-                            >Books</p>
+                            >Admin Panel</p>
                         </Link>
                     </li>
                     <li className={"w-[70%]"}>
