@@ -8,8 +8,14 @@ const CarSchema = MongooseSchemas.CarSchema
 async function createCar(data){
     try{
 
-
-        const newCarPropType = await CarSchema.create({carname: data.carname, carUUID: data.carUUID, userUUID: data.userUUID})
+        const newCarPropType = await CarSchema.create({
+            carID: data.carID,
+            carUUID: data.carUUID,
+            userUUID: data.userUUID,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            finished: false
+        });
 
 
         return newCarPropType

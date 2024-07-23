@@ -19,9 +19,12 @@ const UserSchema = new mongoose.Schema({
 })
 
 const CarSchema = new mongoose.Schema({
-    carname: String,
+    carID: String,
     userUUID: String,
     carUUID: String,
+    startDate: Date,
+    endDate: Date,
+    finished: Boolean
 })
 
 const CarPropsSchema = new mongoose.Schema({

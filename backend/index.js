@@ -130,7 +130,7 @@ app.post("/createCar", async (req, res) => {
     const carUUIDString = uuidv4();
 
     const data = {
-        carname: req.body.carname,
+        carID: req.body.carID,
         carUUID: carUUIDString,
 
         userUUID: req.body.userUUID,
