@@ -240,17 +240,16 @@ app.post("/createCarPropType", async (req, res) => {
     res.json(CarProp)
 })
 
-app.get("/getAllCarProps", async (req, res) => {
-    let page;
+app.get("/getAllCarPropTypes", async (req, res) => {
+    let page = 1;
 
     if(req.query.page){
         page = parseInt(req.query.page);
     }
-    else{
-        page = 1;
-    }
 
     const Items = await getCarPropTypes(page)
+
+    console.log(Items)
 
     res.json(Items)
 })

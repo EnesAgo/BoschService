@@ -28,11 +28,11 @@ async function getCarPropTypes(page){
         const limit = 100;
         const offset = (page - 1) * limit;
 
-
         const total = await CarPropTypeSchema.countDocuments({});
 
         const CarPropTypes = await CarPropTypeSchema.find({}).skip(offset).limit(limit);
 
+        console.log({ total, CarPropTypes, page })
 
         return { total, CarPropTypes, page }
 

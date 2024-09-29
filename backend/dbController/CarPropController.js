@@ -9,7 +9,12 @@ async function createCarProp(data){
     try{
 
         
-        const newCarPropType = await CarPropSchema.create({Title: data.Title, carUUID: data.carUUID, carPropUUID: data.carPropUUID, bill: data.bill})
+        const newCarPropType = await CarPropSchema.create({
+            Title: data.Title,
+            carUUID: data.carUUID,
+            carPropUUID: data.carPropUUID,
+            bill: data.bill
+        })
 
 
         return newCarPropType
