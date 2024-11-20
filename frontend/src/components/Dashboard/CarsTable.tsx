@@ -1,6 +1,40 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import httpRequest from "@/requests/HttpRequest";
+import {alertError} from "@/functions/alertFunctions";
 
 export default function CarsTable() {
+    const [cars, setCars] = useState<any>(undefined)
+    const [carsPage, setCarsPage] = useState<any>(1)
+
+
+    useEffect(() => {
+
+        getCars()
+
+    }, [])
+
+
+    async function getCars(){
+        try{
+
+            const carsRes: any = await httpRequest(`/getAllCars?page=${carsPage.toString()}`)
+            console.log(carsRes.CarPropTypes)
+
+            if(carsRes.error){
+                console.log(carsRes.error)
+                return
+            }
+
+            setCars(carsRes.CarPropTypes)
+
+
+        } catch (e) {
+            alertError('Error Occurred');
+            console.log(`error: ${e}`)
+        }
+    }
+
+
     return (
         // <div>
 
@@ -28,91 +62,28 @@ export default function CarsTable() {
                 </tr>
                 </thead>
                 <tbody>
-                <tr className="odd:bg-white even:bg-gray-50 border-b">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        OH6791AE
-                    </th>
-                    <td className="px-6 py-4">
-                        {new Date().toDateString()}
-                    </td>
-                    <td className="px-6 py-4">
-                        false
-                    </td>
-                    <td className="px-6 py-4">
-                        $2999
-                    </td>
-                    <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr className="odd:bg-white even:bg-gray-50 border-b">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Microsoft Surface Pro
-                    </th>
-                    <td className="px-6 py-4">
-                        White
-                    </td>
-                    <td className="px-6 py-4">
-                        Laptop PC
-                    </td>
-                    <td className="px-6 py-4">
-                        $1999
-                    </td>
-                    <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr className="odd:bg-white even:bg-gray-50">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Magic Mouse 2
-                    </th>
-                    <td className="px-6 py-4">
-                        Black
-                    </td>
-                    <td className="px-6 py-4">
-                        Accessories
-                    </td>
-                    <td className="px-6 py-4">
-                        $99
-                    </td>
-                    <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr className="odd:bg-white even:bg-gray-50">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Google Pixel Phone
-                    </th>
-                    <td className="px-6 py-4">
-                        Gray
-                    </td>
-                    <td className="px-6 py-4">
-                        Phone
-                    </td>
-                    <td className="px-6 py-4">
-                        $799
-                    </td>
-                    <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        Apple Watch 5
-                    </th>
-                    <td className="px-6 py-4">
-                        Red
-                    </td>
-                    <td className="px-6 py-4">
-                        Wearables
-                    </td>
-                    <td className="px-6 py-4">
-                        $999
-                    </td>
-                    <td className="px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
-                    </td>
-                </tr>
+
+                {
+                    cars && cars.map((element:any, index:any) => (
+                        <tr key={index}>
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {element.carID}
+                            </th>
+                            <td className="px-6 py-4">
+                                {new Date(element.startDate).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4">
+                                {element.finished.toString()}
+                            </td>
+                            <td className="px-6 py-4">
+                                €{element.bill}
+                            </td>
+                            <td className="px-6 py-4">
+                                <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    ))
+                }
                 </tbody>
             </table>
         </div>

@@ -5,7 +5,7 @@ import httpRequest from "@/requests/HttpRequest";
 
 export default function Create() {
 
-    const [carPropTypes, setCarPropTypes] = useState()
+    const [carPropTypes, setCarPropTypes] = useState({})
 
     async function getCarPropTypes(){
         const response:any = await httpRequest.get("/getAllCarPropTypes")
@@ -20,7 +20,7 @@ export default function Create() {
     return (
         <>
             <Sidebar tab={"home"} />
-            <CreateDashboard />
+            <CreateDashboard carProps={carPropTypes} />
         </>
     );
 }

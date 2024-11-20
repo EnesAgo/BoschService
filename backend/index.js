@@ -132,7 +132,7 @@ app.post("/createCar", async (req, res) => {
     const data = {
         carID: req.body.carID,
         carUUID: carUUIDString,
-
+        startDate: new Date(),
         userUUID: req.body.userUUID,
     }
 
@@ -189,9 +189,10 @@ app.post("/createCarProp", async (req, res) => {
 
     const data = {
         Title: req.body.title,
+        carPropTypeTitle: req.body.carPropTypeTitle,
         carUUID: req.body.carUUID,
         carPropUUID: carPropUUIDString,
-        bill: req.body.bill
+        bill: 0
 
     }
 

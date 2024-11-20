@@ -13,7 +13,8 @@ async function createCar(data){
             carUUID: data.carUUID,
             userUUID: data.userUUID,
             startDate: data.startDate,
-            endDate: data.endDate,
+            bill: 0,
+            // endDate: data.endDate,
             finished: false
         });
 

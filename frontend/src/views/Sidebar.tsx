@@ -22,8 +22,10 @@ export default function Sidebar({ tab }: any) {
         <div className="gridHeader bg-white h-[100%] w-[275px] glassMorphism flex items-center justify-center py-7">
             <div className={"h-full w-[80%] flex flex-col gap-14 justify-start items-center"}>
                 <div className="flex items-center h-12 gap-1">
-                    {/*<img src="/assets/images/settings.svg" alt="settings icon" className="w-12 h-12" />*/}
-                    <h2 className="text-2xl font-semibold font-Poppins">Dashboard</h2>
+                    <Link href={"/"}>
+                        <h2 className="text-2xl font-semibold font-Poppins">Dashboard</h2>
+                    </Link>
+
                 </div>
                 <ul className={"flex flex-col items-center gap-8 w-full"}>
                     <li className={"w-[70%]"}>

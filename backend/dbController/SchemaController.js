@@ -23,12 +23,14 @@ const CarSchema = new mongoose.Schema({
     userUUID: String,
     carUUID: String,
     startDate: Date,
-    endDate: Date,
-    finished: Boolean
+    // endDate: Date,
+    finished: Boolean,
+    bill: Number
 })
 
 const CarPropsSchema = new mongoose.Schema({
     Title: String,
+    carPropTypeTitle: String,
     bill: Number,
     carUUID: String,
     carPropUUID: String
