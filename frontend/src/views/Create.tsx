@@ -49,11 +49,15 @@ export default function CreateDashboard({carProps}: any) {
 
             for (const inputEl of inputs) {
 
+
+
                 const carPropData = {
                     Title: e.target[inputEl.Title].value,
                     carUUID: newCarRes.carUUID,
                     carPropTypeTitle:inputEl.Title
                 }
+
+                console.log(carPropData)
 
                 try{
 

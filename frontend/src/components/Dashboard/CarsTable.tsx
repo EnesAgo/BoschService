@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import httpRequest from "@/requests/HttpRequest";
 import {alertError} from "@/functions/alertFunctions";
+import Link from "next/link";
 
 export default function CarsTable() {
     const [cars, setCars] = useState<any>(undefined)
@@ -79,7 +80,7 @@ export default function CarsTable() {
                                 €{element.bill}
                             </td>
                             <td className="px-6 py-4">
-                                <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
+                                <Link href={`/edit/${element.carID}`} className="font-medium text-blue-600 hover:underline">Edit</Link>
                             </td>
                         </tr>
                     ))

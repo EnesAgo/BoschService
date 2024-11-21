@@ -46,6 +46,21 @@ async function getCars(page){
     }
 }
 
+async function getOneCar(carID){
+    try{
+
+        const Car = await CarSchema.findOne({carID: carID})
+
+        console.log(Car)
+
+        return Car
+
+    }catch (e){
+        return {error: e}
+    }
+}
+
+
 async function getUserCars(page, userUUID){
     try{
 
@@ -86,6 +101,7 @@ async function deleteCar(carUUID){
 module.exports = {
     createCar: createCar,
     getCars: getCars,
+    getOneCar: getOneCar,
     getUserCars: getUserCars,
     deleteCar: deleteCar
 };

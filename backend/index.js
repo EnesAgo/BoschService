@@ -19,6 +19,7 @@ const CarFunctions = require("./dbController/CarController")
 const {
     createCar: createCar,
     getCars: getCars,
+    getOneCar: getOneCar,
     getUserCars: getUserCars,
     deleteCar: deleteCar
 } = CarFunctions;
@@ -156,6 +157,20 @@ app.get("/getAllCars", async (req, res) => {
     res.json(Items)
 })
 
+app.get("/getOneCar", async (req, res) => {
+
+    if(!req.query.carID) {
+        res.json({error: "no query"})
+        return
+    }
+
+
+    console.log(req.query.carID)
+    const Item = await getOneCar(req.query.carID)
+
+    res.json(Item)
+})
+
 app.get("/getUserCars", async (req, res) => {
     let page;
 
@@ -188,7 +203,7 @@ app.post("/createCarProp", async (req, res) => {
     const carPropUUIDString = uuidv4();
 
     const data = {
-        Title: req.body.title,
+        Title: req.body.Title,
         carPropTypeTitle: req.body.carPropTypeTitle,
         carUUID: req.body.carUUID,
         carPropUUID: carPropUUIDString,
