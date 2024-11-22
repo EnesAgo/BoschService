@@ -32,6 +32,7 @@ const CarPropsSchema = new mongoose.Schema({
     Title: String,
     carPropTypeTitle: String,
     bill: Number,
+    carID: String,
     carUUID: String,
     carPropUUID: String
 })

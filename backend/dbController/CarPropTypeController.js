@@ -1,28 +1,31 @@
-const { v4: uuidv4 } = require('uuid');
+const {v4: uuidv4} = require('uuid');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const MongooseSchemas = require("./SchemaController")
 const CarPropTypeSchema = MongooseSchemas.CarPropTypeSchema
 
-async function createCarPropType(data){
-    try{
+async function createCarPropType(data) {
+    try {
 
 
-
-        const newCarPropType = await CarPropTypeSchema.create({Title: data.Title, bill: data.bill})
-
+        const newCarPropType = await CarPropTypeSchema.create({
+            Title: data.Title,
+            bill: data.bill,
+            carID: data.carID,
+            carPropTypeTitle: data.carPropTypeTitle
+        });
 
 
         return newCarPropType
 
-    }catch (e){
+    } catch (e) {
         return {error: e}
     }
 }
 
-async function getCarPropTypes(page){
-    try{
+async function getCarPropTypes(page) {
+    try {
 
         // define limit per page
         const limit = 100;
@@ -32,17 +35,17 @@ async function getCarPropTypes(page){
 
         const CarPropTypes = await CarPropTypeSchema.find({}).skip(offset).limit(limit);
 
-        console.log({ total, CarPropTypes, page })
+        console.log({total, CarPropTypes, page})
 
-        return { total, CarPropTypes, page }
+        return {total, CarPropTypes, page}
 
-    }catch (e){
+    } catch (e) {
         return {error: e}
     }
 }
 
-async function deleteCarPropType(Title){
-    try{
+async function deleteCarPropType(Title) {
+    try {
 
         const deleted = await CarPropTypeSchema.deleteOne({
             Title: Title
@@ -50,12 +53,10 @@ async function deleteCarPropType(Title){
 
         return {success: "Event deleted successfully", deleted}
 
-    }
-    catch(e){
+    } catch (e) {
         return {error: e};
     }
 }
-
 
 
 module.exports = {

@@ -45,6 +45,13 @@ async function getCarProp(page, carUUID){
     }
 }
 
+async function updateCarProp(data, carPropUUID) {
+
+    const updated = await CarSchema.findOneAndUpdate({carPropUUID: carPropUUID}, data)
+
+    return updated;
+}
+
 async function deleteCarProp(carPropUUID){
     try{
 
@@ -65,5 +72,6 @@ async function deleteCarProp(carPropUUID){
 module.exports = {
     createCarProp: createCarProp,
     getCarProp: getCarProp,
+    updateCarProp: updateCarProp,
     deleteCarProp: deleteCarProp
 };

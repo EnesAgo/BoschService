@@ -80,7 +80,12 @@ async function getUserCars(page, userUUID){
         return {error: e}
     }
 }
+async function updateCar(data, carID) {
 
+    const updated = await CarSchema.findOneAndUpdate({carID: carID}, data)
+
+    return updated;
+}
 async function deleteCar(carUUID){
     try{
 
@@ -103,5 +108,6 @@ module.exports = {
     getCars: getCars,
     getOneCar: getOneCar,
     getUserCars: getUserCars,
+    updateCar: updateCar,
     deleteCar: deleteCar
 };

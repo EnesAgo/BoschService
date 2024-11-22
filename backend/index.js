@@ -21,6 +21,7 @@ const {
     getCars: getCars,
     getOneCar: getOneCar,
     getUserCars: getUserCars,
+    updateCar: updateCar,
     deleteCar: deleteCar
 } = CarFunctions;
 
@@ -30,6 +31,7 @@ const CarPropFunctions = require("./dbController/CarPropController")
 const {
     createCarProp: createCarProp,
     getCarProp: getCarProp,
+    updateCarProp: updateCarProp,
     deleteCarProp: deleteCarProp
 } = CarPropFunctions;
 
@@ -186,6 +188,27 @@ app.get("/getUserCars", async (req, res) => {
     res.json(Items)
 })
 
+app.put("/updateCar", async (req, res) => {
+
+    if(!req.query.carID) {
+        res.json({error: "no query"})
+        return
+    }
+
+    const data = {
+        // carPropTypeTitle: req.body.carPropTypeTitle,
+        // carID: req.body.carID,
+        // carUUID: req.body.carUUID,
+        finished: req.body.finished,
+        startDate: req.body.startDate,
+        bill: req.body.bill,
+    }
+
+
+    const event = await updateCar(data, req.query.carID)
+    res.json(event)
+})
+
 app.delete("/deleteCar/:uuID", verify, async (req, res) => {
     const deletedUUID = req.params.uuID;
     const data = await deleteCar(deletedUUID);
@@ -205,11 +228,13 @@ app.post("/createCarProp", async (req, res) => {
     const data = {
         Title: req.body.Title,
         carPropTypeTitle: req.body.carPropTypeTitle,
+        carID: req.body.carID,
         carUUID: req.body.carUUID,
         carPropUUID: carPropUUIDString,
         bill: 0
-
     }
+
+    console.log(data)
 
     const CarProp = await createCarProp(data)
 
@@ -229,6 +254,25 @@ app.get("/getAllCarProps", async (req, res) => {
     const Items = await getCarProp(page, req.query.carUUID)
 
     res.json(Items)
+})
+
+app.put("/updateCarProp", async (req, res) => {
+
+    if(!req.query.carUUID) {
+        res.json({error: "no query"})
+        return
+    }
+
+    const data = {
+        Title: req.body.Title,
+        // carPropTypeTitle: req.body.carPropTypeTitle,
+        // carID: req.body.carID,
+        // carUUID: req.body.carUUID,
+    }
+
+
+    const event = await updateCarProp(data, req.query.carUUID)
+    res.json(event)
 })
 
 app.delete("/deleteCarProp/:uuID", verify, async (req, res) => {

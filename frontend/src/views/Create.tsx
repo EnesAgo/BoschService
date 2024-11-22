@@ -8,12 +8,16 @@ export default function CreateDashboard({carProps}: any) {
     const [inputs, setInputs] = useState<any>([])
     const [userCreds, setUserCreds] = useState<any>(undefined)
 
+    const carIDData = {
+        Title: "carID"
+    }
+
     useEffect(() => {
         if(localStorage.jwt){
             setUserCreds(JSON.parse(localStorage.jwt))
         }
 
-        if(carProps.CarPropTypes) setInputs(carProps.CarPropTypes)
+        if(carProps.CarPropTypes) setInputs([carIDData, ...carProps.CarPropTypes])
     }, [carProps])
 
 
@@ -43,21 +47,21 @@ export default function CreateDashboard({carProps}: any) {
                 alertError('Error Occurred');
                 return
             }
-            console.log(newCarRes.carUUID)
 
 
 
             for (const inputEl of inputs) {
 
-
+                if(inputEl.Title == "carID") continue;
 
                 const carPropData = {
                     Title: e.target[inputEl.Title].value,
                     carUUID: newCarRes.carUUID,
-                    carPropTypeTitle:inputEl.Title
+                    carPropTypeTitle:inputEl.Title,
+                    carID: carID
                 }
 
-                console.log(carPropData)
+                // console.log(carPropData)
 
                 try{
 
@@ -67,7 +71,7 @@ export default function CreateDashboard({carProps}: any) {
                         alertError('Error Occurred');
                         return
                     }
-                    console.log(carPropRes)
+                    // console.log(carPropRes)
 
                 } catch (e) {
                     console.log(`error: ${e}`)
@@ -100,7 +104,6 @@ export default function CreateDashboard({carProps}: any) {
 
 
                     <section className="flex w-[90%] flex-wrap items-center justify-center gap-14">
-
 
                             {
                                 inputs && inputs.map((e:any, i:any) => (
