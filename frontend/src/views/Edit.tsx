@@ -202,7 +202,7 @@ export default function EditDashboard({carID}: any) {
                         className="hover:bg-[#605ace] w-[80%] rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                         type={"submit"}
                     >
-                        Submit
+                        Update
                     </button>
 
                     <button

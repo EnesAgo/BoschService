@@ -30,7 +30,7 @@ async function getCars(page){
     try{
 
         // define limit per page
-        const limit = 100;
+        const limit = 15;
         const offset = (page - 1) * limit;
 
 
