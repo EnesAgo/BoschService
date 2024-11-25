@@ -258,7 +258,7 @@ app.get("/getAllCarProps", async (req, res) => {
 
 app.put("/updateCarProp", async (req, res) => {
 
-    if(!req.query.carUUID) {
+    if(!req.query.carPropUUID) {
         res.json({error: "no query"})
         return
     }
@@ -271,7 +271,7 @@ app.put("/updateCarProp", async (req, res) => {
     }
 
 
-    const event = await updateCarProp(data, req.query.carUUID)
+    const event = await updateCarProp(data, req.query.carPropUUID)
     res.json(event)
 })
 

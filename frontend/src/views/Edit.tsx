@@ -2,8 +2,12 @@ import React, {useEffect, useState} from "react";
 import HeaderBar from "@/components/Dashboard/HeaderBar";
 import httpRequest from "@/requests/HttpRequest";
 import {alertError, alertSuccess} from "@/functions/alertFunctions";
+import {useRouter} from "next/router";
 
 export default function EditDashboard({carID}: any) {
+
+    const router = useRouter()
+
 
     const [inputs, setInputs] = useState<any>([])
     const [userCreds, setUserCreds] = useState<any>(undefined)
@@ -69,15 +73,37 @@ export default function EditDashboard({carID}: any) {
             const putCar: any = await httpRequest.put(`/updateCar?carID=${currentCarData.carID}`, editCarData);
 
 
-            console.log(putCar)
-
             if(putCar.error){
                 alertError(`error: ${putCar.error}`)
                 console.log(putCar.error)
+                return
             }
-            else{
-                alertSuccess("Patient Successfully Updated")
+
+            for (const input of inputs) {
+                try{
+
+                    const inpRes: any = await httpRequest.put(`/updateCarProp?carPropUUID=${input.carPropUUID}`,
+                        {Title: e.target.elements.namedItem(input.carPropTypeTitle).value});
+
+                    console.log(inpRes)
+
+
+                    if(inpRes.error) {
+                        alertError(`error: ${inpRes.error}`)
+                        console.log(inpRes.error)
+                        return
+                    }
+
+
+                } catch (inpError) {
+                    alertError(`error: inpError`)
+                    console.log(inpError)
+                    return
+                }
             }
+
+            alertSuccess("Car Successfully Updated")
+
 
         }
         catch (e){
@@ -86,12 +112,27 @@ export default function EditDashboard({carID}: any) {
 
         }
 
-
-
-
-
-
     }
+
+
+
+    async function deleteCar(){
+        try{
+            const deleteCar: any = await httpRequest.delete(`/deleteCar/${currentCarData.carUUID}`)
+
+            console.log(deleteCar)
+
+            alertSuccess("Patient Successfully deleted")
+            setTimeout(() => {router.push("/")}, 1500)
+            return
+        } catch (e) {
+            console.log(e)
+            alertError("An Error Occurred")
+            return
+        }
+    }
+
+
 
     return (
         <div className="gridMain bg-[#F0F0F0] flex flex-col">
@@ -144,7 +185,7 @@ export default function EditDashboard({carID}: any) {
                                 <label className={"mx-4"} key={i}>
                                 <p className="!text-base pl-[1px] ml-0.5 py-2 cursor-text
                  font-Poppints">{e.carPropTypeTitle}</p>
-                                <input className={"border-2 border-[rgba(102, 102, 102, 0.35)] font-Poppins !placeholder-[rgba(102, 102, 102, 0.60)] !w-72 !h-12 !pl-3 rounded-xl"} type={"text"} placeholder={e.carPropTypeTitle} defaultValue={e.Title} name={e.Title} required />
+                                <input className={"border-2 border-[rgba(102, 102, 102, 0.35)] font-Poppins !placeholder-[rgba(102, 102, 102, 0.60)] !w-72 !h-12 !pl-3 rounded-xl"} type={"text"} placeholder={e.carPropTypeTitle} defaultValue={e.Title} name={e.carPropTypeTitle} required />
                     </label>
 
                                 ))
@@ -162,6 +203,14 @@ export default function EditDashboard({carID}: any) {
                         type={"submit"}
                     >
                         Submit
+                    </button>
+
+                    <button
+                        className=" hover:bg-[#fc0505] w-[80%] rounded-md bg-[#ff3f3f] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                        type={"button"}
+                        onClick={deleteCar}
+                    >
+                        Delete
                     </button>
 
 

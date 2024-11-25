@@ -47,7 +47,7 @@ async function getCarProp(page, carUUID){
 
 async function updateCarProp(data, carPropUUID) {
 
-    const updated = await CarSchema.findOneAndUpdate({carPropUUID: carPropUUID}, data)
+    const updated = await CarPropSchema.findOneAndUpdate({carPropUUID: carPropUUID}, data)
 
     return updated;
 }
