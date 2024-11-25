@@ -3,6 +3,7 @@ import HeaderBar from "@/components/Dashboard/HeaderBar";
 import httpRequest from "@/requests/HttpRequest";
 import {alertError, alertSuccess} from "@/functions/alertFunctions";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function EditDashboard({carID}: any) {
 
@@ -205,13 +206,23 @@ export default function EditDashboard({carID}: any) {
                         Update
                     </button>
 
-                    <button
-                        className=" hover:bg-[#fc0505] w-[80%] rounded-md bg-[#ff3f3f] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-                        type={"button"}
-                        onClick={deleteCar}
-                    >
-                        Delete
-                    </button>
+                    <div className={"w-[80%] flex justify-between"}>
+                        <button
+                            className=" hover:bg-[#fc0505] min-w-[40%]  rounded-md bg-[#ff3f3f] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                            type={"button"}
+                            onClick={deleteCar}
+                        >
+                            Delete
+                        </button>
+                        <Link className={"min-w-[40%]"} target={"_blank"} href={`/edit/${carID}/print`}>
+                            <button
+                                className="hover:bg-green-500 w-full rounded-md bg-green-400 py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                                type={"button"}
+                            >
+                                Print
+                            </button>
+                        </Link>
+                    </div>
 
 
 

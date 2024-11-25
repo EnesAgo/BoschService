@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { useRouter } from 'next/router'
 import {requestBaseUrl} from "@/requests/constants";
+import moment from "moment/moment";
 
 export async function getServerSideProps({ params }: any){
     try{
@@ -42,6 +43,8 @@ const PrintDocumentAlb = ({ data }: any ) => {
 
     const { carUUID, carID, startDate, bill } = data
 
+    const startDateFormatted = moment(startDate).format("DD MMM YYYY hh:mm");
+
 
     return (
         data &&
@@ -49,7 +52,6 @@ const PrintDocumentAlb = ({ data }: any ) => {
             <div className="w-full h-full flex flex-col gap-10">
                 <h1 className="text-center text-dark text-4xl">New Smile</h1>
                 <div className="flex flex-col gap-12">
-                    <h1 className="font-semibold text-xl">Служби:</h1>
                     <div className="w-full flex justify-center">
                         <table className="table table-auto w-[80%] border-collapse border border-slate-500">
                             <thead className="w-full">
@@ -64,7 +66,7 @@ const PrintDocumentAlb = ({ data }: any ) => {
                             <tr className="w-full bg-alto even:bg-sand child:border child:border-slate-500 child:p-2">
                                 <td><h2>{carUUID}</h2></td>
                                 <td><h2>{carID}</h2></td>
-                                <td><h2>{new Date(startDate).toLocaleDateString()}</h2></td>
+                                <td><h2>{startDateFormatted}</h2></td>
                                 <td><h2>{bill}</h2></td>
                             </tr>
                             </tbody>
